@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <form action="register.php" method="POST">
-        <h2>Register</h2>
-        <label for="id">ID</label>
+        <h2 class="font">Register</h2>
+        <label for="id" class="font">ID</label>
         <input type="number" id="id" name="id" required>
 
-        <label for="username">Username</label>
+        <label for="username" class="font">Username</label>
         <input type="text" id="username" name="username" required>
 
-        <label for="email">Email</label>
+        <label for="email" class="font">Email</label>
         <input type="email" id="email" name="email" required>
 
-        <label for="password">Password</label>
+        <label for="password" class="font">Password</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Register</button>
+        <button type="submit" class="font">Register</button>
 </body>
 </html>
 <?php 
@@ -36,8 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
 
     if (!preg_match($Pattern, $password)) {
-        die("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.");
+        echo '<div style="font-size: 12px; class="font"; color: black; font-weight:; text-align: center;">Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.</div>';
+        die(); // Stop further execution
     }
+    
 
     // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);

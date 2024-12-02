@@ -1,0 +1,230 @@
+/* Base styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, rgba(255, 154, 158, 0.8), rgba(250, 208, 196, 0.8), rgba(251, 194, 235, 0.8), rgba(161, 140, 209, 0.8));
+    background-size: 400% 400%;
+    animation: gradientBackground 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Form with transparency */
+form {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 450px;
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+form::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    opacity: 0.5;
+    animation: pulseEffect 6s infinite ease-in-out;
+    z-index: -1;
+}
+
+@keyframes pulseEffect {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Adjusted inputs with increased space between them */
+input {
+    width: 100%;
+    padding: 0.85rem;
+    margin-bottom: 1.5rem; /* Increased margin for more space */
+    border: 1px solid rgba(200, 200, 200, 0.6);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeInInput 2s ease-in-out;
+}
+
+@keyframes fadeInInput {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+input:focus {
+    border-color: #ff6f61;
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.6);
+    outline: none;
+    animation: glowEffect 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes glowEffect {
+    from { box-shadow: 0 0 10px rgba(255, 111, 97, 0.6); }
+    to { box-shadow: 0 0 15px rgba(255, 111, 97, 0.9); }
+}
+
+/* Rounded Register Button */
+button {
+    width: 100%;
+    padding: 1rem; /* Increased padding for a better-rounded look */
+    border: none;
+    border-radius: 30px; /* High value for rounded button */
+    background: linear-gradient(90deg, rgba(255, 111, 97, 0.85), rgba(255, 154, 158, 0.85));
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+button:hover::after {
+    left: 100%;
+}
+
+button:hover {
+    background: linear-gradient(90deg, rgba(255, 59, 47, 0.9), rgba(255, 111, 97, 0.9));
+    box-shadow: 0 6px 12px rgba(255, 111, 97, 0.4), 0 0 20px rgba(255, 111, 97, 0.6);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Button glow effect */
+@keyframes buttonGlow {
+    0% { box-shadow: 0 0 10px rgba(255, 111, 97, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(255, 111, 97, 0.6); }
+    100% { box-shadow: 0 0 10px rgba(255, 111, 97, 0.4); }
+}
+
+button.glow {
+    animation: buttonGlow 2s infinite alternate;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+}
+
+button:hover::before {
+    width: 150%;
+    height: 400%;
+    opacity: 0.4;
+}
+
+/* Animations for form elements */
+form {
+    animation: slideInForm 1s ease-in-out forwards;
+}
+
+@keyframes slideInForm {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+label,
+input,
+button {
+    opacity: 100;
+    animation: slideInBars 1.5s ease-in-out forwards;
+}
+
+/* Synchronized delays */
+
+
+
+
+button {
+    animation-delay: 0.9s;
+}
+
+@keyframes slideInBars {
+    0% { opacity: 0; transform: translateX(-30px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive styles with Bootstrap */
+@media (max-width: 768px) {
+    form {
+        padding: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    form {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+
+
+    
+}
+
+.font{
+
+    font-family: cursive;
+
+
+}
