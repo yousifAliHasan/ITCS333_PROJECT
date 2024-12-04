@@ -1,18 +1,28 @@
+<?php
+session_start();
+
+// Redirect if already logged in
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['user_type'] === 'admin') {
+        header('Location: dashboard.php');
+    } else {
+        header('Location: rooms.php');
+    }
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-    
-
 </head>
 <body>
-        <form action="login.php" method="POST">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <h2 class="font">Login</h2>
             <label for="id" class="font">ID</label>
             <input type="number" id="id" name="id" required>
@@ -20,25 +30,18 @@
             <label for="password" class="font">Password</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" class="font">Login</button>
-        </form>
-</body>
-</html>
-<?php
-session_start();
+        <button type="submit" class="font">Login</button>
 
-// Redirect if already logged in
-if (isset($_SESSION['user_id'])) {
-    header('Location: profile.php');
-    exit();
-}
-?>
+        <!-- Add link to registration -->
+        <p style="text-align: center; margin-top: 1rem;">
+            Don't have an account? <a href="register.php">Register here</a>
+        </p>
+    </form>
 
-<?php 
-
-    include 'connection.php'; // Ensure this connects to the database
-
+    <?php 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        include 'connection.php';
+        
         $id = trim($_POST['id']);
         $password = $_POST['password'];
         
@@ -54,9 +57,12 @@ if (isset($_SESSION['user_id'])) {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_type'] = $user['user_type'];
                 
-                
-                
-                header('Location: profile.php');
+                // Redirect based on user type
+                if ($user['user_type'] === 'admin') {
+                    header('Location: dashboard.php');
+                } else {
+                    header('Location: rooms.php');
+                }
                 exit();
             } else {
                 echo '<div class="alert alert-danger">Invalid ID or password.</div>';
@@ -65,5 +71,6 @@ if (isset($_SESSION['user_id'])) {
             echo '<div class="alert alert-danger">Login error: ' . $e->getMessage() . '</div>';
         }
     }
-
-?>
+    ?>
+</body>
+</html>
