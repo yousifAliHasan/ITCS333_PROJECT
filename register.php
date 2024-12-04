@@ -11,59 +11,77 @@
 </head>
 <body>
 <form action="register.php" method="POST">
-        <h2 class="font">Register</h2>
-        <label for="id" class="font">ID</label>
+        <h2>Register</h2>
+        <label for="id">ID</label>
         <input type="number" id="id" name="id" required>
 
-        <label for="username" class="font">Username</label>
+        <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
 
-        <label for="email" class="font">Email</label>
+        <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 
-        <label for="password" class="font">Password</label>
+        <label for="password">Password</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit" class="font">Register</button>
+        <button type="submit">Register</button>
+
+        <!-- Add link to login page -->
+        <p style="text-align: center; margin-top: 1rem;">
+            Already have an account? <a href="login.php">Login here</a>
+        </p>
 </body>
 </html>
 <?php 
-include 'connection.php'; // Ensure this file establishes $db as the PDO instance
+include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
+    $errors = [];
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
-    $email = $_POST['email'];
-    $id = $_POST['id'];
-    $user_type='student';
-    // Password pattern validation
-    $Pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
+    $email = trim($_POST['email']);
+    $id = trim($_POST['id']);
+    $user_type = 'student';
 
-    if (!preg_match($Pattern, $password)) {
-        echo '<div style="font-size: 12px; class="font"; color: black; font-weight:; text-align: center;">Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.</div>';
-        die(); // Stop further execution
+    // Validate UoB email
+    if (!preg_match('/^' . $id . '@stu\.uob\.edu\.bh$/', $email)) {
+        $errors[] = "Please use a valid University of Bahrain email address (your ID followed by @stu.uob.edu.bh)";
     }
-    
 
-    // Hash the password
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    // Password validation
+    $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
+    if (!preg_match($passwordPattern, $password)) {
+        $errors[] = "Password must be at least 8 characters long and include at least one uppercase letter, lowercase letter, number, and special character.";
+    }
 
-    // Prepare SQL query
-    $query = 'INSERT INTO students(username, password, email, id , user_type) VALUES (:username, :password, :email, :id , :user_type)';
-    $statement = $db->prepare($query);
+    // Check if email or ID already exists
+    $stmt = $db->prepare("SELECT COUNT(*) FROM students WHERE email = :email OR id = :id");
+    $stmt->execute([':email' => $email, ':id' => $id]);
+    if ($stmt->fetchColumn() > 0) {
+        $errors[] = "Email or ID already registered";
+    }
 
-    try {
-        // Execute query
-        $statement->execute([
-            ':username' => $username,
-            ':password' => $hashedPassword,
-            ':email' => $email,
-            ':id' => $id,
-            ':user_type' => $user_type
-        ]);
-        echo "Registration successful!";
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    if (empty($errors)) {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        
+        try {
+            $query = 'INSERT INTO students(username, password, email, id, user_type) 
+                     VALUES (:username, :password, :email, :id, :user_type)';
+            $statement = $db->prepare($query);
+            $statement->execute([
+                ':username' => $username,
+                ':password' => $hashedPassword,
+                ':email' => $email,
+                ':id' => $id,
+                ':user_type' => $user_type
+            ]);
+            
+            echo '<div class="alert alert-success">Registration successful! Please <a href="login.php">login</a>.</div>';
+        } catch (PDOException $e) {
+            echo '<div class="alert alert-danger">Registration failed: ' . $e->getMessage() . '</div>';
+        }
+    } else {
+        echo '<div class="alert alert-danger">' . implode('<br>', $errors) . '</div>';
     }
 }
 ?>
