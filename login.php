@@ -24,14 +24,24 @@
         </form>
 </body>
 </html>
+<?php
+session_start();
+
+// Redirect if already logged in
+if (isset($_SESSION['user_id'])) {
+    header('Location: profile.php');
+    exit();
+}
+?>
+
 <?php 
 
     include 'connection.php'; // Ensure this connects to the database
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id = $_POST['id'];
+        $id = trim($_POST['id']);
         $password = $_POST['password'];
-
+        
         try {
             // Retrieve user by ID
             $stmt = $db->prepare("SELECT * FROM students WHERE id = :id");
@@ -39,12 +49,20 @@
             $user = $stmt->fetch();
 
             if ($user && password_verify($password, $user['password'])) {
-                echo "Login successful! Welcome, " . htmlspecialchars($user['username']) . ".";
+                // Set session variables
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['user_type'] = $user['user_type'];
+                
+                
+                
+                header('Location: profile.php');
+                exit();
             } else {
-                echo "Invalid ID or password.";
+                echo '<div class="alert alert-danger">Invalid ID or password.</div>';
             }
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            echo '<div class="alert alert-danger">Login error: ' . $e->getMessage() . '</div>';
         }
     }
 
