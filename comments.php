@@ -173,6 +173,7 @@ if (isset($_POST['respond_to_comment'])) {
         border-radius: 10px;
     }
     /* Form response styling */
+/* Updated button styling */
 .response-form button {
     width: 100%;
     padding: 12px;
@@ -180,7 +181,7 @@ if (isset($_POST['respond_to_comment'])) {
     border-radius: 30px;
     background: linear-gradient(90deg, rgba(255, 111, 97, 0.85), rgba(255, 154, 158, 0.85));
     color: white;
-    font-family: 'Courier New', Courier, monospace; /* Change font to Courier New */
+    font-family: 'Courier New', Courier, monospace; /* Apply Courier New font */
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -237,6 +238,10 @@ if (isset($_POST['respond_to_comment'])) {
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <a href="dashboard.php" class="response-form">
+    <button>Dashboard</button>
+</a>
+
     </div>
 
 </body>
