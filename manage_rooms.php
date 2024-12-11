@@ -312,6 +312,7 @@ foreach ($rooms as $room) {
                 </div>
             </div>
         </div>
+        <a href="dashboard.php" class="btn font">Dashboard</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
