@@ -130,11 +130,37 @@ $user = $stmt->fetch();
             <input type="password" id="new_password" name="new_password">
 
             <button type="submit" class="font">Update Profile</button>
+            <a href="rooms.php" class="btn btn-primary font" style="margin-top: 10px;">Home</a>
         </form>
 
         <form action="logout.php" method="POST" style="margin-top: 20px;">
             <button type="submit" class="btn btn-danger font">Logout</button>
         </form>
     </div>
+    <style>
+        body {
+    font-family: 'Courier New', Courier, monospace;
+    /* other styles */
+}
+    input, textarea, select {
+    font-family: 'Courier New', Courier, monospace;
+}
+.btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, rgba(255, 111, 97, 0.85), rgba(255, 154, 158, 0.85));
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 120px;
+        }
+
+
+
+    </style>
 </body>
 </html>

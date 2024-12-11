@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id'])) {
         <button type="submit" class="font">Login</button>
 
         <!-- Add link to registration -->
-        <p style="text-align: center; margin-top: 1rem;">
+        <p style="text-align: center; margin-top: 1rem;font-family: 'Courier New', Courier, monospace;">
             Don't have an account? <a href="register.php">Register here</a>
         </p>
     </form>
