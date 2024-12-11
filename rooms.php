@@ -123,7 +123,7 @@ $unread_notifications = $stmt->fetchColumn();
         }
 
         .navbar .btn-outline-info {
-            color: #FF9800;
+            color: #ffffff;
             border-color: #17a2b8;
         }
 
@@ -386,7 +386,7 @@ $unread_notifications = $stmt->fetchColumn();
                         <a href="profile.php" class="btn btn-light ms-3">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a href="notifications.php" class="btn btn-outline-info position-relative ms-3">
+                        <a href="notifications.php" class="btn btn-outline-light btn-outline-info position-relative ms-3">
                             <i class="bi bi-bell-fill"></i> 
                             <?php if ($unread_notifications > 0): ?>
                                 <span class="badge bg-danger position-absolute top-0 start-100 translate-middle p-1 rounded-circle">
@@ -396,7 +396,7 @@ $unread_notifications = $stmt->fetchColumn();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="logout.php" class="btn btn-danger ms-3">Logout</a>
+                        <a href="logout.php" class="btn btn-outline-light ms-3">Logout</a>
                     </li>
                 </ul>
             </div>
