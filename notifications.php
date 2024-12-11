@@ -1,4 +1,4 @@
-<?php 
+<?php  
 include 'connection.php'; // Ensure this file correctly connects to the database
 
 session_start(); // Start the session
@@ -126,7 +126,12 @@ $responses = $stmt->fetchAll();
         <?php else: ?>
             <p>No notifications available.</p>
         <?php endif; ?>
-        <button href="rooms.php" class="btn btn-danger" >Home</button>
+
+
+        <!-- Home button with JavaScript redirect -->
+        <button class="btn btn-danger" onclick="window.location.href='rooms.php';">Home</button>
+
+
 
     </div>
 </body>
