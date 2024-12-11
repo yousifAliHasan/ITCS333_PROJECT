@@ -126,6 +126,8 @@ $responses = $stmt->fetchAll();
         <?php else: ?>
             <p>No notifications available.</p>
         <?php endif; ?>
+        <button href="rooms.php" class="btn btn-danger" >Home</button>
+
     </div>
 </body>
 </html>
